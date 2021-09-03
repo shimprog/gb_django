@@ -1,0 +1,56 @@
+<div class="pagination_block">
+            <div>
+              <ul class="pagination">
+                {% if json_product.has_previous %}
+                  <li><a href="?page={{ json_product.previous_page_number }}">&lt;</a></li>
+                         {% if json_product.number|add:'-3' > 1 %}
+                            <li><a href="?page=1">1</a></li>
+                         {% endif %}
+                  {% if json_product.number|add:'-3' >= 3 %}
+                    <li>
+                        <a href="?page={{ page_obj.previous_page_number|add:'-3' }}">
+                        • • •
+                        </a>
+                    </li>
+                  {% endif %}
+                {% endif %}
+
+                {% if json_product.paginator.page_range|length > 1 %}
+                    {% for i in json_product.paginator.page_range %}
+                        {% if json_product.number == i %}
+                            <li>
+                                <a class="active" href="#">{{ i }}</a>
+                            </li>
+                         {% elif i > json_product.number|add:'-4' and i < json_product.number|add:'4' %}
+                                <li >
+                                    <a href="?page={{ i }}">{{ i }}</a>
+                                </li>
+                         {% endif %}
+                   {% endfor %}
+                {% endif %}
+
+
+
+                  {% if json_product.has_next %}
+                    {% if json_product.number|add:'4' < json_product.paginator.num_pages %}
+                        <li>
+                            <a href="?page={{ json_product.next_page_number|add:'3' }}">
+                            • • •
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% if json_product.number|add:'3' < json_product.paginator.num_pages %}
+                        <li>
+                            <a class="pagination__link" href="?page={{ json_product.paginator.num_pages }}">
+                            {{ json_product.paginator.num_pages }}
+                            </a>
+                        </li>
+                    {% endif %}
+                    <li><a href="?page={{ json_product.next_page_number }}">&gt;</a></li>
+                  {% endif %}
+
+
+
+              </ul>
+            </div>
+          </div>
