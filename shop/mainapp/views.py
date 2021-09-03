@@ -1,6 +1,5 @@
 import json
 import os
-
 from django.shortcuts import render
 from django.core.paginator import Paginator
 
@@ -31,7 +30,6 @@ def products(request):
     # print(os.getcwd())
     with open("mainapp\mebel_office.json", encoding='utf-8') as read_json:
         data = json.load(read_json)
-
     pages = pagination_sample(request, data, 5)
     content = {'links': links_menu, 'json_product': pages}
     return render(request, 'mainapp/products.html', content)
