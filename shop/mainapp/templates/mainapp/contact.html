@@ -4,18 +4,9 @@
 
 {% block header %}
 <div class="hero">
-			<div class="header clearfix">
-				<a href="{% url 'home' %}" class="logo"></a>
-				<ul class="menu">
-					<li><a href="{% url 'home' %}" >домой</a></li>
-					<li><a href="{% url 'products' %}">продукты</a></li>
-					<li><a href="{% url 'contacts' %}" class="active">контакты</a></li>
-				</ul>
-				<a href="#" class="search"></a>
-                <a href="#" class="basket"></a>
-			</div>
-			<h1>наши контакты</h1>
-		</div>
+    {% include 'mainapp/headmenu.html' %}
+    <h1>наши контакты</h1>
+</div>
 {% endblock %}
 {% block content %}
 <div class="location">

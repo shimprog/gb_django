@@ -1,19 +1,11 @@
 {% extends 'mainapp/base.html' %}
 {% load static %}
+
 {% block title %}Каталог{% endblock %}
 
 {% block header %}
 <div class="hero-white">
-			<div class="header clearfix">
-				<a href="{% url 'home' %}" class="logo"></a>
-				<ul class="menu">
-					<li><a href="{% url 'home' %}">домой</a></li>
-					<li><a href="{% url 'products' %}" class="active">продукты</a></li>
-					<li><a href="{% url 'contacts' %}">контакты</a></li>
-				</ul>
-				<a href="#" class="search"></a>
-                <a href="#" class="basket"></a>
-			</div>
+			{% include 'mainapp/headmenu.html' %}
 		</div>
 {% endblock %}
 
@@ -21,41 +13,48 @@
 <div class="details">
 			<div class="links clearfix">
 				<ul class="links-menu">
-					{% for el in links %}
-					<li><a href="{{ el.href }}" class="{% if request.resolver_match.url_name == link.href %}active{% endif %}">{{ el.name }}</a></li>
+					{% for el in category %}
+					<li><a href="/products/{{ el.id }}" class="{% if request.resolver_match.url_name == el.id %}active{% endif %}">{{ el.name }}</a></li>
 					{% endfor %}
 				</ul>
 			</div>
 
-			{% for product in json_product %}
+			{% for product in products %}
 			<div class="details-products">
 				<div class="details-slider">
 					<div class="slider-product">
-						<img src="{{ product.photos_title }}">
+                        {% for img in img_product %}
+                            {% if img.product_id == product.id %}
+                                    <img src="/media/{{ img.img_product }}">
+                            {% endif %}
+                        {% endfor %}
 					</div>
+
 					<div class="slider-control">
-						{% for img in product.photos_small %}
-						<div class="block">
-							<a href="#"><img src="{{ img }}" alt="">
-								<div class="text"></div>
-							</a>
-						</div>
+						{% for img in img_full %}
+                            {% if img.product_id == product.id %}
+                                <div class="block">
+							        <a href="#"><img src="/media/{{ img.img_product }}" alt="">
+                                        <div class="text"></div>
+                                    </a>
+                                </div>
+                            {% endif %}
+
 						{% endfor %}
 
 					</div>
 				</div>
 
+
 				<div class="description">
 					<h3 class="big-bold">{{ product.name }}</h3>
-					<h3 class="red">горячее предложение</h3>
-					<p class="price"> {{ product.price }} <span>руб</span></p>
+					<h3 class="red">{{ product.category.name }}</h3>
+					<p class="price">{{ product.price }}</p>
 					<a href="#" class="red-button">
 						заказать <i class="fa fa-chevron-right" aria-hidden="true"></i>
 					</a>
 					<div class="description-text">
-						{% for spec1, spec2 in product.specifications.items %}
-						<p>{{ spec1 }} {{ spec2 }}</p>
-						{% endfor %}
+						<p>{{ product.discriptions }}</p>
 					</div>
 				</div>
 			</div>
