@@ -3,6 +3,7 @@ import os
 
 from django.shortcuts import render
 from django.core.paginator import Paginator
+from .models import Product, ImageProduct, ProductCategories
 
 
 def index(request):
@@ -20,20 +21,29 @@ def pagination_sample(request, obj, amount):
     return page_obj
 
 
-def products(request):
-    links_menu = [
-        {'href': 'products_all', 'name': 'все'},
-        {'href': 'products_home', 'name': 'дом'},
-        {'href': 'products_office', 'name': 'офис'},
-        {'href': 'products_modern', 'name': 'модерн'},
-        {'href': 'products_classic', 'name': 'классика'},
-    ]
-    # print(os.getcwd())
-    with open("mainapp\mebel_office.json", encoding='utf-8') as read_json:
-        data = json.load(read_json)
-
-    pages = pagination_sample(request, data, 5)
-    content = {'links': links_menu, 'json_product': pages}
+def products(request, pk=None):
+    category = ProductCategories.objects.all()
+    if pk == None or pk == 1:
+        products_all = Product.objects.order_by('-id').all()
+    else:
+        products_all = Product.objects.filter(category=int(pk)).order_by('-id').all()
+    pages = pagination_sample(request, products_all, 5)
+    lst_id_product = []
+    for el in pages:
+        lst_id_product.append(int(el.id))
+    # Одна картинка на продукт
+    img_poster = ImageProduct.objects.order_by('-id').filter(
+        product_id__lte=lst_id_product[0],
+        product__gte=lst_id_product[-1]
+    ).values()
+    img_poster = {el['product_id']: el for el in img_poster}.values()
+    # Все картинки продукта на страницу
+    img_full = ImageProduct.objects.filter(product_id__lte=lst_id_product[0], product__gte=lst_id_product[-1])
+    content = {'products': pages,
+               'img_product': img_poster,
+               'img_full': img_full,
+               'category': category,
+               }
     return render(request, 'mainapp/products.html', content)
 
 

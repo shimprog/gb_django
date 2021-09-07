@@ -6,15 +6,12 @@
 	<title>{% block title %}{% endblock %}</title>
 	<link rel="stylesheet" href="{% static 'mainapp/style.css' %}">
 	<link rel="stylesheet" href="{% static 'mainapp/fonts/font-awesome/css/font-awesome.css' %}">
-
 </head>
 <body>
 	<div class="container">
         {% block header %}{% endblock %}
         {% block content %}{% endblock %}
 	</div>
-
     {% include 'mainapp/footer.html' %}
-
 </body>
 </html>
