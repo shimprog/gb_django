@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     # localapp
     'mainapp',
     'authapp',
+    'basket',
 ]
 
 MIDDLEWARE = [
@@ -130,5 +131,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+CART_SESSION_ID = 'basket'
 # authentication of our model, not the User.
 AUTH_USER_MODEL = 'authapp.ShopUser'

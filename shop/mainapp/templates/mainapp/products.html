@@ -14,7 +14,7 @@
 			<div class="links clearfix">
 				<ul class="links-menu">
 					{% for el in category %}
-					<li><a href="/products/{{ el.id }}" class="{% if request.resolver_match.url_name == el.id %}active{% endif %}">{{ el.name }}</a></li>
+					<li><a href="/products/{{ el.id }}" class="{% if request.resolver_match.kwargs.pk == el.id %}active{% endif %}">{{ el.name }}</a></li>
 					{% endfor %}
 				</ul>
 			</div>
@@ -50,7 +50,7 @@
 					<h3 class="big-bold">{{ product.name }}</h3>
 					<h3 class="red">{{ product.category.name }}</h3>
 					<p class="price">{{ product.price }}</p>
-					<a href="#" class="red-button">
+					<a href="{% url 'basket:add' product.pk %}" class="red-button">
 						заказать <i class="fa fa-chevron-right" aria-hidden="true"></i>
 					</a>
 					<div class="description-text">
