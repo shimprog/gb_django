@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% for el in basket %}
+    <p>{{ el.product.id }} {{ el.product }} {{ el.quantity }} шт.</p><a href="{% url 'basket:remove' el.product.id %}" class="red-button">удалить</a>
+{% endfor %}
+</body>
+</html>

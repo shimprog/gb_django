@@ -1,9 +1,7 @@
-import json
-import os
-
 from django.shortcuts import render
 from django.core.paginator import Paginator
 from .models import Product, ImageProduct, ProductCategories
+from basket.models import Basket
 
 
 def index(request):
@@ -22,6 +20,9 @@ def pagination_sample(request, obj, amount):
 
 
 def products(request, pk=None):
+    basket = []
+    if request.user.is_authenticated:
+        basket = Basket.objects.filter(user=request.user)
     category = ProductCategories.objects.all()
     if pk == None or pk == 1:
         products_all = Product.objects.order_by('-id').all()
@@ -43,6 +44,7 @@ def products(request, pk=None):
                'img_product': img_poster,
                'img_full': img_full,
                'category': category,
+               'basket': basket,
                }
     return render(request, 'mainapp/products.html', content)
 
