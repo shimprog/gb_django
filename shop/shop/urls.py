@@ -18,11 +18,14 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from mainapp import views as mainapp_v
 
 
 urlpatterns = [
+    path('', mainapp_v.index, name='home'),
+    path('contacts', mainapp_v.contact, name='contacts'),
     path('admin/', admin.site.urls),
-    path('', include('mainapp.urls')),
+    path('products/', include('mainapp.urls', namespace='products')),
     path('auth/', include('authapp.urls', namespace='auth')),
     path('basket/', include('basket.urls', namespace='basket')),
 ]

@@ -1,12 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-{% for el in basket %}
-    <p>{{ el.product.id }} {{ el.product }} {{ el.quantity }} шт.</p><a href="{% url 'basket:remove' el.product.id %}" class="red-button">удалить</a>
-{% endfor %}
-</body>
-</html>
+{% for item in basket %}
+    <div class="basket_record">
+        {% for img in img_poster %}{% if img.product_id == item.product_id %}<img src="/media/{{ img.img_product }}">{% endif %}{% endfor %}
+    <div class="basket_info">
+      <span class="category_name">{{ item.product.category.name }}</span>
+      <span class="product_name">{{ item.product.name }}</span>
+      <span class="product_price">{{ item.product.price }}</span>
+      <input type="number" name="{{ item.product_id }}"
+                           min="0"
+                           value="{{ item.quantity }}">
+      <span class="product_cost">Итог по товару: {{ item.product_cost }} р.</span>
+      <button class="btn btn-round">
+        <a href="{% url 'basket:remove' item.product.id %}" class="">
+          удалить
+        </a>
+      </button>
+    </div>
+    </div>
+  {% endfor %}
+  {% if basket %}
+    <div class="basket_summary">
+      В корзине {{ basket.0.total_quantity }} товаров общей стоимостью {{ basket.0.total_cost }} р.
+    </div>
+  {% endif %}
+  </div>

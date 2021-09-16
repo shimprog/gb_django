@@ -2,7 +2,7 @@
 				<a href="{% url 'home' %}" class="logo"></a>
 				<ul class="menu">
 					<li><a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">домой</a></li>
-					<li><a href="{% url 'products' %}" class="{% if request.resolver_match.url_name == 'products' %}active{% endif %}">продукты</a></li>
+					<li><a href="{% url 'products:product' %}" class="{% if request.resolver_match.namespace == 'products' %}active{% endif %}">продукты</a></li>
 					<li><a href="{% url 'contacts' %}" class="{% if request.resolver_match.url_name == 'contacts' %}active{% endif %}">контакты</a></li>
 				    {% include 'mainapp/inc_menu.html' %}
                 </ul>
@@ -10,7 +10,8 @@
 				<a href="#" class="search"></a>
                 <a href="{% url 'basket:view' %}" class="basket">
                     <span>
-                        {% if basket %} {{ basket|length }} {% endif %}
+                        {% if basket %} {{ basket.0.total_quantity }} шт. {{ basket.0.total_cost }} р. {% endif %}
                     </span>
                 </a>
+
 			</div>
