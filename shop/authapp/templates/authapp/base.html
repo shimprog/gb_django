@@ -8,10 +8,22 @@
             {{ title|title }}
         {% endblock %}
     </title>
-    <link rel="stylesheet" href="{% static 'authapp/css/style.css' %}">
+    {% block css %}
+        <link rel="stylesheet" type="text/css" href="{% static 'mainapp/bootstrap.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'mainapp/style.css' %}">
+        <link rel="stylesheet" href="{% static 'mainapp/fonts/font-awesome/css/font-awesome.css' %}">
+    {% endblock %}
+    {% block js %}
+
+    {% endblock %}
 </head>
 <body>
+	<div class="container">
+        <div class="login">
             {% block content %}
+
             {% endblock %}
+        </div>
+	</div>
 </body>
 </html>

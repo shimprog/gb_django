@@ -3,18 +3,15 @@
 
 
 {% block content %}
-        <div class="wrapper">
-  <div class="header">
-    <h3 class="sign-in">Профиль</h3>
-      <div class="clear"></div>
-    <form action="{% url 'auth:edit' %}" method="post" enctype="multipart/form-data">
+    <form class="form-horizontal" action="{% url 'auth:edit' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ edit_form.as_p }}
-            <div class="user_avatar"><img src="/media/{{ user.avatar }}"></div>
-        <input class="form-control" type="submit" value="Cохранить">
-        <div class="btn"><a href="{% url 'home' %}" class="">Главная
-        </a></div>
+        <input class="form-control" type="submit" value="сохранить">
     </form>
-  </div>
-        </div>
+    <button class="btn btn-round form-control last">
+        <a href="{% url 'home' %}" class="">
+            на главную
+        </a>
+    </button>
+    <div class="user_avatar"><img src="/media/{{ user.avatar }}"></div>
 {% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block header %}
+<div class="hero-white">
+			{% include 'mainapp/headmenu.html' %}
+		</div>
+{% endblock %}
+
+{% block content %}
+    <div class="details-products">
+				<div class="details-slider">
+					<div class="slider-product">
+                        <img src="/media/{{ img_full.0.img_product }}">
+					</div>
+
+					<div class="slider-control">
+						{% for img in img_full %}
+                            {% if img.product_id == product.id %}
+                                <div class="block">
+							        <a href="#"><img src="/media/{{ img.img_product }}" alt="">
+                                        <div class="text"></div>
+                                    </a>
+                                </div>
+                            {% endif %}
+
+						{% endfor %}
+
+					</div>
+				</div>
+				<div class="description">
+					<h3 class="big-bold">{{ product.name }}</h3>
+					<h3 class="red">{{ product.category.name }}</h3>
+					<p class="price">{{ product.price }}</p>
+					<a href="{% url 'basket:add' product.pk %}" class="red-button">
+						заказать <i class="fa fa-chevron-right" aria-hidden="true"></i>
+					</a>
+					<div class="description-text">
+						<p>{{ product.discriptions }}</p>
+					</div>
+				</div>
+			</div>
+{% endblock %}
