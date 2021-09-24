@@ -1,16 +1,30 @@
+// window.onload = function () {
+//     let basket_list = document.querySelector('.basket_list')
+//     basket_list.addEventListener('change', (e) => {
+//         fetch("/basket/edit/" + e.target.name + "/" + e.target.value + "/", {
+//             method: 'GET',
+//             headers: { 'X-Requested-With': 'XMLHttpRequest' },
+//         }).then(response => response.json())
+//             .then(data => {
+//                 basket_list.innerHTML = data.result
+//             })
+//     })
+// }
+
 window.onload = function () {
-    $('.basket_list').on('click', 'input[type="number"]', function (event) {
-        let t_href = event.target;
-
-        $.ajax({
-            url: "/basket/edit/" + t_href.name + "/" + t_href.value + "/",
-
-            success: function (data) {
-                $('.basket_list').html(data.result);
-            },
-        });
-
-        event.preventDefault();
-    });
+    async function fetch_product(e) {
+        const response = await fetch("/basket/edit/" + e.target.name + "/" + e.target.value + "/",
+            {
+                method: 'GET',
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            }
+        );
+        return await response.json()
+    }
+    let basket_list = document.querySelector('.basket_list')
+    basket_list.addEventListener('change', (e) => {
+        fetch_product(e).then(
+            data => basket_list.innerHTML = data.result
+        )
+    })
 }
-
