@@ -1211,3 +1211,9 @@ ul.pagination li a:hover:not(.active) {background-color: #ddd;}
 	color: #495057;
 	text-decoration: none;
 }
+.user_record {
+	opacity: 1;
+}
+.not_active {
+	opacity: 0.5;
+}

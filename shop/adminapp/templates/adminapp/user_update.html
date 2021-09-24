@@ -1,0 +1,23 @@
+{% extends 'authapp/base.html' %}
+{% load static %}
+
+{% block content %}
+  <form class="form-horizontal" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ update_form.as_p }}
+    <input class="form-control" type="submit" value="сохранить">
+  </form>
+  <button class="btn btn-round form-control last">
+        {% if request.resolver_match.url_name == 'user_create' %}
+            <a href="{% url 'admin:users' %}">к списку пользователей</a>
+        {% endif %}
+  {% if request.resolver_match.url_name == 'user_update' %}
+            <a href="{% url 'admin:users' %}">к списку пользователей</a>
+        {% endif %}
+
+    {% if request.resolver_match.url_name == 'category_create' or request.resolver_match.url_name == 'category_update' %}
+            <a href="{% url 'admin:categories' %}">к списку категорий</a>
+        {% endif %}
+
+  </button>
+{% endblock %}
