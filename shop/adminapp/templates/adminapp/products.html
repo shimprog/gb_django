@@ -11,9 +11,11 @@
 		
     {% for object in products %}
       <div class="product_record">
-        <img 
-          src="/media/{{object.image|default:'products_images/default.jpg'}}"
-          alt="{{ object.name }}">
+        {% for img in img_product %}
+                            {% if img.product_id == object.id %}
+                                    <img src="/media/{{ img.img_product }}">
+                            {% endif %}
+                        {% endfor %}
         <div class="product_name">
           {{ object.name|title }}
         </div>
