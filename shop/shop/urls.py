@@ -32,8 +32,10 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    urlpatterns += staticfiles_urlpatterns()
+    urlpatterns += (
+            static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) +
+            static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    )
 
 # При отключенном дебаге будет работать
 handler404 = "mainapp.views.page_not_found_view"

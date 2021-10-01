@@ -1,6 +1,4 @@
-import adminapp.views as adminapp
 from django.urls import path
-
 import adminapp.views.user_views as user
 import adminapp.views.product_views as product
 import adminapp.views.category_views as category
@@ -9,6 +7,8 @@ import adminapp.views.category_views as category
 app_name = 'adminapp'
 
 urlpatterns = [
+    path('main/', user.main, name='main'),
+
     path('users/create/', user.UserCreateView.as_view(), name='user_create'),
     path('users/read/', user.UserListView.as_view(), name='users'),
     path('users/update/<int:pk>/', user.UserUpdateView.as_view(), name='user_update'),
