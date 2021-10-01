@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>{% block title %}{% endblock %}</title>
+	<link rel="stylesheet" href="{% static 'mainapp/style.css' %}">
+	<link rel="stylesheet" href="{% static 'mainapp/fonts/font-awesome/css/font-awesome.css' %}">
+</head>
+<body>
+
+
+<div class="admin_container">
+    <div class="h2 text-center head">
+      Админка
+    </div>
+    {% block menu %}
+      <div class="admin_menu">
+        {% include 'adminapp/includes/inc_menu_ajax.html' %}
+      </div>
+    {% endblock %}
+
+{% block content %}
+<div id="main"></div>
+{% endblock %}
+
+</div>
+
+{% block js %}
+<script>
+    const main_obj = document.getElementById('main')
+
+    async function fetch_urls(url) {
+        return await fetch(url, {
+            method: 'GET',
+            headers: { 'X-Requested-With': 'XMLHttpRequest' },
+        }).then(response => { response.json().then(Object => main_obj.innerHTML = Object.data) })
+    }
+    window.onload = function () {
+        fetch_urls('http://127.0.0.1:8000{% url 'admin:users' %}')
+
+        const categories = document.getElementById('categories')
+        categories.addEventListener('click', (e) => {
+            fetch_urls('http://127.0.0.1:8000{% url 'admin:categories' %}')
+        })
+
+        const users = document.getElementById('users')
+        users.addEventListener('click', (e) => {
+            fetch_urls('http://127.0.0.1:8000{% url 'admin:users' %}')
+        })
+    }
+
+</script>
+{% endblock %}
+
+</body>
+</html>

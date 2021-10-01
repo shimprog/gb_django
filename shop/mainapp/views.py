@@ -5,18 +5,12 @@ from basket.models import Basket
 
 
 def index(request):
-    basket = []
-    if request.user.is_authenticated:
-        basket = Basket.objects.filter(user=request.user)
-    content = {'basket': basket}
+    content = {}
     return render(request, 'mainapp/index.html', content)
 
 
 def contact(request):
-    basket = []
-    if request.user.is_authenticated:
-        basket = Basket.objects.filter(user=request.user)
-    content = {'basket': basket}
+    content = {}
     return render(request, 'mainapp/contact.html', content)
 
 
@@ -28,9 +22,6 @@ def pagination_sample(request, obj, amount):
 
 
 def products(request, pk=None):
-    basket = []
-    if request.user.is_authenticated:
-        basket = Basket.objects.filter(user=request.user)
     category = ProductCategories.objects.all()
     if pk == None or pk == 1:
         products_all = Product.objects.order_by('-id').all()
@@ -56,19 +47,14 @@ def products(request, pk=None):
                'img_product': img_poster,
                'img_full': img_full,
                'category': category,
-               'basket': basket,
                }
     return render(request, 'mainapp/products.html', content)
 
 
 def product(request, pk=None, pk1=None):
-    basket = []
-    if request.user.is_authenticated:
-        basket = Basket.objects.filter(user=request.user)
     product = Product.objects.get(id=pk1)
     img_full = ImageProduct.objects.filter(product_id=pk1).all()
     content = {
-        'basket': basket,
         'product': product,
         'img_full': img_full,
     }

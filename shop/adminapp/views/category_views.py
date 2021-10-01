@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import user_passes_test
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
@@ -25,6 +25,15 @@ from adminapp.views.user_views import AdminPanelProtectionMixin
 class ProductCategoryListView(AdminPanelProtectionMixin, ListView):
     model = ProductCategories
     template_name = 'adminapp/categories.html'
+
+    def get(self, request, *args, **kwargs):
+        if 'X-Requested-With' in request.headers:
+            self.template_name = 'adminapp/categories_ajax.html'
+            old_render = super().get(request, *args, **kwargs)
+            new_render = old_render.rendered_content
+            return JsonResponse({'data': new_render})
+        else:
+            return super().get(request, *args, **kwargs)
 
 
 # @user_passes_test(lambda u: u.is_superuser)
