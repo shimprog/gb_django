@@ -21,7 +21,7 @@ def products(request, pk):
     category = get_object_or_404(ProductCategories, pk=pk)
     product_list = Product.objects.filter(category__pk=pk).order_by('-id')
     pages = pagination_sample(request, product_list, 5)
-
+    img_poster = []
     if list(pages.object_list) != []:
         lst_id_product = []
         for el in pages:
@@ -76,7 +76,10 @@ class ProductDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['img'] = ImageProduct.objects.filter(product_id=self.get_object().id)[:1].get()
+        try:
+            context['img'] = ImageProduct.objects.filter(product_id=self.get_object().id)[:1].get()
+        except:
+            context['img'] = []
         return context
 
 

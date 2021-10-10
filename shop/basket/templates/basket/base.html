@@ -6,9 +6,9 @@
   <title>
     Корзина
   </title>
-    <link rel="stylesheet" href="{% static 'mainapp/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'mainapp/style.css' %}">
-    <link rel="stylesheet" href="{% static 'mainapp/fonts/font-awesome/css/font-awesome.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'mainapp/css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'mainapp/style.css' %}">
+	<link rel="stylesheet" href="{% static 'mainapp/fonts/font-awesome/css/font-awesome.css' %}">
 </head>
 <body>
   <div class="basket_container">
@@ -26,6 +26,9 @@
     </div>
     <button class="btn btn-round">
       <a href="{% url 'home' %}">на главную</a>
+    </button>
+  <button class="btn btn-round">
+      <a href="{% url 'orderapp:order_create' %}">создать заказ</a>
     </button>
       <script async src="{% static 'basket/js/basket_ajax.js' %}"></script>
 </body>
