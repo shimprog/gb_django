@@ -180,23 +180,24 @@ AUTHENTICATION_BACKENDS = (
 with open('vk.json', 'r') as f:
     VK = json.load(f)
 
-LOGIN_ERROR_URL = '/'
-SOCIAL_AUTH_VK_OAUTH2_IGNORE_DEFAULT_SCOPE = True
-SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['email']
+# LOGIN_ERROR_URL = '/'
+# LOGIN_REDIRECT_URL = '/'
+# SOCIAL_AUTH_VK_OAUTH2_IGNORE_DEFAULT_SCOPE = True
+# SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['email']
 
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 SOCIAL_AUTH_VK_OAUTH2_KEY = VK['SOCIAL_AUTH_VK_OAUTH2_KEY']
 SOCIAL_AUTH_VK_OAUTH2_SECRET = VK['SOCIAL_AUTH_VK_OAUTH2_SECRET']
 
-SOCIAL_AUTH_PIPELINE = (
-    'social_core.pipeline.social_auth.social_details',
-    'social_core.pipeline.social_auth.social_uid',
-    'social_core.pipeline.social_auth.auth_allowed',
-    'social_core.pipeline.social_auth.social_user',
-    'social_core.pipeline.user.create_user',
-    'authapp.pipeline.save_user_profile',
-    'social_core.pipeline.social_auth.associate_user',
-    'social_core.pipeline.social_auth.load_extra_data',
-    'social_core.pipeline.user.user_details',
-)
+# SOCIAL_AUTH_PIPELINE = (
+#     'social_core.pipeline.social_auth.social_details',
+#     'social_core.pipeline.social_auth.social_uid',
+#     'social_core.pipeline.social_auth.auth_allowed',
+#     'social_core.pipeline.social_auth.social_user',
+#     'social_core.pipeline.user.create_user',
+#     'authapp.pipeline.save_user_profile',
+#     'social_core.pipeline.social_auth.associate_user',
+#     'social_core.pipeline.social_auth.load_extra_data',
+#     'social_core.pipeline.user.user_details',
+# )

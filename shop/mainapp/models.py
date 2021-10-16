@@ -29,9 +29,16 @@ class Product(models.Model):
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
 
+    def one_img(self):
+        return ImageProduct.objects.filter(product_id=self.id)[:1].get()
+
+    @staticmethod
+    def get_items():
+        return Product.objects.filter(is_active=True).order_by('category', 'name')
+
 
 class ImageProduct(models.Model):
-    img_product = models.ImageField('Изображение', upload_to="product_images", blank=True)
+    img_product = models.FileField(upload_to='product_images', blank=True, null=True, verbose_name='Файл')
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
     def __str__(self):

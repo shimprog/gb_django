@@ -13,7 +13,7 @@
       <div class="product_record">
         {% for img in img_product %}
                             {% if img.product_id == object.id %}
-                                    <img src="/media/{{ img.img_product }}">
+                                    <img class="avatar" src="/media/{{ img.img_product }}">
                             {% endif %}
                         {% endfor %}
         <div class="product_name">

@@ -1,11 +1,14 @@
 from django.contrib.auth.decorators import user_passes_test
+from django.core.files.storage import FileSystemStorage
 from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views.generic import DetailView
 from mainapp.models import Product, ProductCategories, ImageProduct
+
 from adminapp.forms import ProductEditForm
+from adminapp.forms import ImageProductForm
 
 
 def pagination_sample(request, obj, amount):
@@ -48,14 +51,21 @@ def product_create(request, pk):
 
     if request.method == 'POST':
         product_form = ProductEditForm(request.POST, request.FILES)
+        myfile = request.FILES.getlist('myfile')
         if product_form.is_valid():
-            product_form.save()
+            id_product = product_form.save().pk
+            product = Product.objects.get(pk=id_product)
+            if myfile:
+                for f in myfile:
+                    fl = ImageProduct(product=product, img_product=f)
+                    fl.save()
             return HttpResponseRedirect(reverse('admin:products', args=[pk]))
     else:
         product_form = ProductEditForm(initial={'category': category})
+
     content = {'title': title,
                'update_form': product_form,
-               'category': category
+               'category': category,
                }
 
     return render(request, 'adminapp/product_update.html', content)

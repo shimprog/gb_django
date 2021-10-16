@@ -11,8 +11,7 @@
     {% for object in object_list %}
       <div
        class="user_record {% if not object.is_active %}not_active{% endif %}">
-        <img
-{#                #}
+        <img class="img-thumbnail avatar"
           src="{{ MEDIA_URL }}{{ object.avatar|default:'users-avatars/default_ihA87Sh.jpg' }}"
           alt="{{ object.username }}">
         <div class="user_role">

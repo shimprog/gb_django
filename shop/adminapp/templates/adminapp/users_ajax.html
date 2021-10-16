@@ -8,10 +8,13 @@
         новый пользователь
       </a>
     </button>
+
     {% for object in object_list %}
+          <div class="card">
+          <div class="card-body">
       <div
        class="user_record {% if not object.is_active %}not_active{% endif %}">
-        <img
+        <img class="img-thumbnail avatar"
           src="/media/{{ object.avatar|default:'users-avatars/default.jpg' }}"
           alt="{{ object.username }}">
         <div class="user_role">
@@ -43,18 +46,17 @@
           </p>
         </div>
         <div class="user_age">
-          age:<br>
-          {{ object.age }} лет
+          Возраст: {{ object.age }} лет
     </div>
         <div class="user_email">
-          email:<br>
-          {{ object.email }}
+          email: {{ object.email| default:'не указан' }}
         </div>
         <div class="user_lastlogin">
-          logged:<br>
-          {{ object.last_login }}
+          Последний вход: {{ object.last_login }}
         </div>
       </div>
+          </div>
+          </div>
     {% endfor%}
-  </div>
+
 {% endblock %}
