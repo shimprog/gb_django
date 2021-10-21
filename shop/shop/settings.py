@@ -25,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'django-insecure-9z)37et25cjfcxzez)63m21c2^3j5h@$rps=l%!1!@iay^)=xd'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = ['127.0.0.1']
 
 
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'basket',
     'adminapp',
     'social_django',
+    'orderapp',
 ]
 
 MIDDLEWARE = [
