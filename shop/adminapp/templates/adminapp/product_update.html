@@ -5,8 +5,10 @@
   <form class="form-horizontal" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ update_form.as_p }}
+    <input type="file" name="myfile" multiple>
     <input class="form-control" type="submit" value="сохранить">
   </form>
+
   <button class="btn btn-round form-control last">
   <a href="{% url 'admin:products' category.id %}">к списку товаров</a>
   </button>
