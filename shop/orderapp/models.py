@@ -58,6 +58,13 @@ class Order(models.Model):
         items = self.orderitems.select_related()
         return sum(list(map(lambda x: int(x.quantity) * int(x.product.price), items)))
 
+    def get_summary(self):
+        items = self.orderitems.select_related()
+        return {
+            'total_cost': sum(list(map(lambda x: int(x.quantity) * int(x.product.price), items))),
+            'total_quantity': sum(list(map(lambda x: int(x.quantity), items)))
+        }
+
     # переопределяем метод, удаляющий объект
     # def delete(self):
     #     for item in self.orderitems.select_related():
