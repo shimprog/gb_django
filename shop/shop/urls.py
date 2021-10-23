@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf import settings
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from mainapp import views as mainapp_v
@@ -38,6 +38,11 @@ if settings.DEBUG:
             static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) +
             static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     )
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns += [re_path(r'^__debug__/', include(debug_toolbar.urls))]
+
 
 # При отключенном дебаге будет работать
 handler404 = "mainapp.views.page_not_found_view"
