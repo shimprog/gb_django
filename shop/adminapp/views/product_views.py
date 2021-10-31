@@ -25,7 +25,7 @@ def products(request, pk):
     product_list = Product.objects.filter(category__pk=pk).order_by('-id')
     pages = pagination_sample(request, product_list, 5)
     img_poster = []
-    if list(pages.object_list) != []:
+    if list(pages.object_list):
         lst_id_product = []
         for el in pages:
             lst_id_product.append(int(el.id))

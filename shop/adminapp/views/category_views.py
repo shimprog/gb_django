@@ -1,4 +1,6 @@
 from django.contrib.auth.decorators import user_passes_test
+from django.db import connection
+from django.db.models import F
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse, reverse_lazy
@@ -20,6 +22,7 @@ from adminapp.views.user_views import AdminPanelProtectionMixin
 #         'object_list': category_list
 #     }
 #     return render(request, 'adminapp/categories.html', content)
+from shop.authapp.views import db_profile_by_type
 
 
 class ProductCategoryListView(AdminPanelProtectionMixin, ListView):
@@ -89,6 +92,15 @@ class ProductCategoryUpdateView(AdminPanelProtectionMixin, UpdateView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'категории/редактирование'
         return context
+
+    def form_valid(self, form):
+        if 'discount' in form.cleaned_data:
+            discount = form.cleaned_data['discount']
+            if discount:
+                self.object.product_set.update(price=F('price') * (1 - discount / 100))
+                db_profile_by_type(self.__class__, 'UPDATE', connection.queries)
+
+        return super().form_valid(form)
 
 
 # @user_passes_test(lambda u: u.is_superuser)
