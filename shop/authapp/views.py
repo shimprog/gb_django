@@ -1,11 +1,31 @@
 from django.conf import settings
 from django.core.mail import send_mail
-from django.db import transaction
+from django.db import transaction, connection
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 from django.shortcuts import render, HttpResponseRedirect
 from .forms import ShopUserRegisterForm, ShopUserLoginForm, ShopUserEditForm, ShopUserProfileEditForm
 from django.contrib import auth
 from django.urls import reverse
 from .models import ShopUser
+from ..mainapp.models import ProductCategories
+
+
+def db_profile_by_type(prefix, type, queries):
+    update_queries = list(filter(lambda x: type in x['sql'], queries))
+    print(f'db_profile {type} for {prefix}:')
+    [print(query['sql']) for query in update_queries]
+
+
+@receiver(pre_save, sender=ProductCategories)
+def product_is_active_update_productcategory_save(sender, instance, **kwargs):
+    if instance.pk:
+        if instance.is_active:
+            instance.product_set.update(is_active=True)
+        else:
+            instance.product_set.update(is_active=False)
+
+        db_profile_by_type(sender, 'UPDATE', connection.queries)
 
 
 def login(request):
